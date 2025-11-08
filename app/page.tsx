@@ -9,6 +9,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Slider } from "@/components/ui/slider"
 import { Card } from "@/components/ui/card"
 import { Download } from "lucide-react"
+import { HSK_LISTS, getHSKCharacters } from "@/lib/data/hskLists"
+import { DICTIONARY, lookupCharacter } from "@/lib/data/dictionaryData"
 
 export default function Home() {
   const [title, setTitle] = useState("Chinese Practice Worksheet")
@@ -147,7 +149,12 @@ export default function Home() {
                   key={level}
                   variant="outline"
                   size="sm"
-                  onClick={() => setCharacters(`HSK ${level} characters...`)}
+                  onClick={() => {
+                    const chars = getHSKCharacters(level);
+                    // Get first 20 characters from this level
+                    const sample = chars.slice(0, 20).join(' ');
+                    setCharacters(sample);
+                  }}
                 >
                   HSK {level}
                 </Button>
@@ -176,18 +183,20 @@ export default function Home() {
 
               {/* Preview Content */}
               <div className="space-y-8">
-                {characters.split('').filter(c => c.trim()).slice(0, 6).map((char, idx) => (
+                {characters.split(/[\s,]+/).filter(c => c.trim()).slice(0, 6).map((char, idx) => {
+                  const dictEntry = lookupCharacter(char);
+                  return (
                   <div key={idx} className="border-b border-slate-100 pb-6 last:border-0">
                     {/* Character with Pinyin */}
                     <div className="mb-4">
                       <div className="text-sm text-slate-500 text-center mb-1">
-                        pinyin placeholder
+                        {dictEntry?.pinyin || ''}
                       </div>
                       <div className={`text-6xl chinese-font text-center mb-2`}>
                         {char}
                       </div>
                       <div className="text-sm text-slate-600 text-center">
-                        definition placeholder
+                        {dictEntry?.definition || 'No definition available'}
                       </div>
                     </div>
 
@@ -227,7 +236,7 @@ export default function Home() {
                       ))}
                     </div>
                   </div>
-                ))}
+                )})}
 
                 {!characters.trim() && (
                   <div className="text-center py-12 text-slate-400">
