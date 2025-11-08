@@ -11,6 +11,8 @@ import { Card } from "@/components/ui/card"
 import { Download } from "lucide-react"
 import { HSK_LISTS, getHSKCharacters } from "@/lib/data/hskLists"
 import { DICTIONARY, lookupCharacter } from "@/lib/data/dictionaryData"
+import { GridCell } from "@/components/GridCell"
+import { generatePDF } from "@/lib/utils/pdfGenerator"
 
 export default function Home() {
   const [title, setTitle] = useState("Chinese Practice Worksheet")
@@ -20,6 +22,19 @@ export default function Home() {
   const [gridSize, setGridSize] = useState([20])
   const [rowSpacing, setRowSpacing] = useState([10])
   const [traceableCount, setTraceableCount] = useState([2])
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false)
+
+  const handleDownloadPDF = async () => {
+    setIsGeneratingPDF(true)
+    try {
+      await generatePDF(title, 'worksheet-preview')
+    } catch (error) {
+      console.error('PDF generation failed:', error)
+      alert('Failed to generate PDF. Please try again.')
+    } finally {
+      setIsGeneratingPDF(false)
+    }
+  }
 
   return (
     <div className="flex h-screen bg-slate-50">
@@ -163,9 +178,14 @@ export default function Home() {
           </div>
 
           {/* Download Button */}
-          <Button className="w-full" size="lg">
+          <Button
+            className="w-full"
+            size="lg"
+            onClick={handleDownloadPDF}
+            disabled={isGeneratingPDF || !characters.trim()}
+          >
             <Download className="mr-2 h-4 w-4" />
-            Download PDF
+            {isGeneratingPDF ? 'Generating PDF...' : 'Download PDF'}
           </Button>
         </div>
       </aside>
@@ -174,7 +194,7 @@ export default function Home() {
       <main className="flex-1 overflow-auto">
         <div className="p-8">
           <div className="max-w-4xl mx-auto">
-            <Card className="bg-white shadow-lg p-8">
+            <Card id="worksheet-preview" className="bg-white shadow-lg p-8">
               {/* Worksheet Header */}
               <div className="text-center mb-8 pb-4 border-b border-slate-200">
                 <h2 className="text-2xl font-bold text-slate-900">{title}</h2>
@@ -203,36 +223,14 @@ export default function Home() {
                     {/* Practice Grid */}
                     <div className="flex gap-2 justify-center flex-wrap">
                       {Array.from({ length: 8 }).map((_, gridIdx) => (
-                        <div
+                        <GridCell
                           key={gridIdx}
-                          className={`border-2 border-slate-300 ${
-                            gridStyle === 'cross' ? 'grid-pattern-cross' :
-                            gridStyle === 'star' ? 'grid-pattern-star' :
-                            gridStyle === 'cross-star' ? 'grid-pattern-cross-star' :
-                            'grid-pattern-none'
-                          }`}
-                          style={{
-                            width: `${gridSize[0] * 3}px`,
-                            height: `${gridSize[0] * 3}px`,
-                            backgroundSize: `${gridSize[0] * 3}px ${gridSize[0] * 3}px`,
-                          }}
-                        >
-                          {gridIdx === 0 && (
-                            <div
-                              className="w-full h-full flex items-center justify-center chinese-font"
-                              style={{
-                                fontSize: `${gridSize[0] * 2}px`,
-                                color: strokeColor === 'red' ? '#DC2626' :
-                                       strokeColor === 'blue' ? '#2563EB' :
-                                       strokeColor === 'green' ? '#16A34A' :
-                                       '#000000',
-                                opacity: gridIdx < traceableCount[0] ? 0.3 : 1
-                              }}
-                            >
-                              {gridIdx < traceableCount[0] ? char : ''}
-                            </div>
-                          )}
-                        </div>
+                          char={char}
+                          gridStyle={gridStyle as any}
+                          gridSize={gridSize[0]}
+                          strokeColor={strokeColor}
+                          isTraceable={gridIdx < traceableCount[0]}
+                        />
                       ))}
                     </div>
                   </div>
