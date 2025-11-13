@@ -14,7 +14,6 @@ import { lookupCharacter } from "@/lib/data/dictionaryData"
 import { WorksheetRow } from "@/components/WorksheetRow"
 import { generatePDF } from "@/lib/utils/pdfGenerator"
 import { distributeCharactersTo10Rows, getCharacterRepeatCounts } from "@/lib/utils/characterDistribution"
-import { translateDefinition } from "@/lib/utils/translation"
 import { inferPOSFromDefinition } from "@/lib/utils/posInference"
 
 export default function Home() {
@@ -224,10 +223,6 @@ export default function Home() {
                     {charArray.map((char, idx) => {
                       const dictEntry = lookupCharacter(char);
                       const englishDef = dictEntry?.definition || '';
-
-                      // Always use Vietnamese translation from hardcoded dictionary
-                      const vietnameseDef = translateDefinition(char, englishDef, 'vi');
-
                       const pos = inferPOSFromDefinition(englishDef);
 
                       return (
@@ -240,7 +235,6 @@ export default function Home() {
                             pinyin={dictEntry?.pinyin}
                             rowNumber={idx + 1}
                             englishDefinition={englishDef}
-                            vietnameseDefinition={vietnameseDef}
                             pos={pos}
                           />
                         </div>

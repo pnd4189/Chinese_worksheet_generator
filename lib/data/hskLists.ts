@@ -5083,10 +5083,18 @@ export const HSK_LISTS = {
   ]
 };
 
+/**
+ * Get random words from HSK level for worksheet (10 words)
+ * Each call returns different random selection
+ */
 export function getHSKCharacters(level: number): string[] {
   if (level < 1 || level > 6) return [];
   const key = level.toString() as keyof typeof HSK_LISTS;
-  return HSK_LISTS[key] || [];
+  const allWords = HSK_LISTS[key] || [];
+
+  // Return 10 random words from the level
+  const shuffled = [...allWords].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, 10);
 }
 
 export function getAllHSKCharacters(): string[] {
