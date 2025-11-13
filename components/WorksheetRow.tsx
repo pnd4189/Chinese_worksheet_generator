@@ -1,7 +1,6 @@
 import React from 'react';
 import { GridCell } from './GridCell';
 import { getShortPOS } from '@/lib/utils/partOfSpeech';
-import { LANGUAGE_OPTIONS } from '@/lib/utils/translation';
 
 interface WorksheetRowProps {
   char: string;
@@ -11,8 +10,7 @@ interface WorksheetRowProps {
   pinyin?: string;
   rowNumber?: number;
   englishDefinition?: string;
-  translatedDefinition?: string;
-  secondLanguage?: string;
+  vietnameseDefinition?: string;
   pos?: string;
 }
 
@@ -31,8 +29,7 @@ export function WorksheetRow({
   pinyin,
   rowNumber,
   englishDefinition,
-  translatedDefinition,
-  secondLanguage,
+  vietnameseDefinition,
   pos
 }: WorksheetRowProps) {
   // Format definitions for display
@@ -44,12 +41,6 @@ export function WorksheetRow({
   };
 
   const posLabel = pos ? getShortPOS(pos) : '';
-
-  // Get flag emoji for second language
-  const getLanguageFlag = (langCode: string) => {
-    const lang = LANGUAGE_OPTIONS.find(l => l.value === langCode);
-    return lang?.flag || '';
-  };
 
   return (
     <div>
@@ -72,9 +63,9 @@ export function WorksheetRow({
             🇬🇧 {formatDefinition(englishDefinition)}
           </div>
         )}
-        {translatedDefinition && secondLanguage && secondLanguage !== 'en' && (
+        {vietnameseDefinition && (
           <div className="text-xs text-gray-600">
-            {getLanguageFlag(secondLanguage)} {formatDefinition(translatedDefinition)}
+            🇻🇳 {formatDefinition(vietnameseDefinition)}
           </div>
         )}
       </div>

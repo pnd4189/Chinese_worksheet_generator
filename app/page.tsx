@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -8,15 +8,14 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Download, Sparkles, BookOpen, Settings2, Languages, Loader2 } from "lucide-react"
+import { Download, Sparkles, BookOpen, Settings2 } from "lucide-react"
 import { getHSKCharacters } from "@/lib/data/hskLists"
 import { lookupCharacter } from "@/lib/data/dictionaryData"
 import { WorksheetRow } from "@/components/WorksheetRow"
 import { generatePDF } from "@/lib/utils/pdfGenerator"
 import { distributeCharactersTo10Rows, getCharacterRepeatCounts } from "@/lib/utils/characterDistribution"
-import { translateDefinition, LANGUAGE_OPTIONS, type SupportedLanguage } from "@/lib/utils/translation"
+import { translateDefinition } from "@/lib/utils/translation"
 import { inferPOSFromDefinition } from "@/lib/utils/posInference"
-import { translateWithAI } from "@/lib/services/translationService"
 
 export default function Home() {
   const [title, setTitle] = useState("Chinese Practice Worksheet")
@@ -24,10 +23,7 @@ export default function Home() {
   const [gridStyle, setGridStyle] = useState("cross")
   const [strokeColor, setStrokeColor] = useState("black")
   const [gridSize, setGridSize] = useState([18])
-  const [secondLanguage, setSecondLanguage] = useState<SupportedLanguage>("vi")
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false)
-  const [aiTranslations, setAiTranslations] = useState<Record<string, string>>({})
-  const [isTranslating, setIsTranslating] = useState(false)
 
   const handleDownloadPDF = async () => {
     setIsGeneratingPDF(true)
@@ -49,58 +45,6 @@ export default function Home() {
   // Auto-distribute to exactly 10 rows (repeating characters if needed)
   const charArray = distributeCharactersTo10Rows(uniqueChars);
   const repeatCounts = getCharacterRepeatCounts(uniqueChars);
-
-  // Fetch AI translations when characters or language changes
-  // Skip Vietnamese (already has hardcoded translations) and English
-  useEffect(() => {
-    // Only use AI for non-Vietnamese, non-English languages
-    if (secondLanguage === 'vi' || secondLanguage === 'en' || !charArray.length) {
-      return;
-    }
-
-    let cancelled = false;
-
-    const fetchTranslations = async () => {
-      setIsTranslating(true);
-      const newTranslations: Record<string, string> = {};
-
-      try {
-        // Fetch translations for unique characters in parallel
-        const uniqueSet = Array.from(new Set(charArray));
-        await Promise.all(
-          uniqueSet.map(async (char) => {
-            if (cancelled) return;
-
-            const dictEntry = lookupCharacter(char);
-            const englishDef = dictEntry?.definition || '';
-
-            if (!englishDef) return;
-
-            const result = await translateWithAI(char, englishDef, secondLanguage);
-            if (!cancelled) {
-              newTranslations[char] = result.translation;
-            }
-          })
-        );
-
-        if (!cancelled) {
-          setAiTranslations(newTranslations);
-        }
-      } catch (error) {
-        console.error('Translation fetch error:', error);
-      } finally {
-        if (!cancelled) {
-          setIsTranslating(false);
-        }
-      }
-    };
-
-    fetchTranslations();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [charArray, secondLanguage]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
@@ -214,30 +158,6 @@ export default function Home() {
                   </p>
                 </div>
 
-                {/* Second Language */}
-                <div className="space-y-2">
-                  <Label htmlFor="second-language" className="text-sm font-medium flex items-center gap-2">
-                    <Languages className="h-4 w-4" />
-                    Second Language
-                  </Label>
-                  <Select value={secondLanguage} onValueChange={(val) => setSecondLanguage(val as SupportedLanguage)}>
-                    <SelectTrigger id="second-language" className="border-purple-200">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {LANGUAGE_OPTIONS.map(lang => (
-                        <SelectItem key={lang.value} value={lang.value}>
-                          {lang.flag} {lang.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <p className="text-xs text-muted-foreground flex items-center gap-1">
-                    {isTranslating && <Loader2 className="h-3 w-3 animate-spin" />}
-                    Definitions shown in English + selected language
-                    {isTranslating && <span className="text-purple-600 font-medium">(translating...)</span>}
-                  </p>
-                </div>
               </CardContent>
             </Card>
 
@@ -305,15 +225,8 @@ export default function Home() {
                       const dictEntry = lookupCharacter(char);
                       const englishDef = dictEntry?.definition || '';
 
-                      // Use AI translation if available, otherwise fall back to hardcoded translation
-                      let translatedDef: string;
-                      if (secondLanguage === 'vi' || secondLanguage === 'en') {
-                        // Use hardcoded Vietnamese translations or English
-                        translatedDef = translateDefinition(char, englishDef, secondLanguage);
-                      } else {
-                        // Use AI translation if available, otherwise show English as fallback
-                        translatedDef = aiTranslations[char] || englishDef;
-                      }
+                      // Always use Vietnamese translation from hardcoded dictionary
+                      const vietnameseDef = translateDefinition(char, englishDef, 'vi');
 
                       const pos = inferPOSFromDefinition(englishDef);
 
@@ -327,8 +240,7 @@ export default function Home() {
                             pinyin={dictEntry?.pinyin}
                             rowNumber={idx + 1}
                             englishDefinition={englishDef}
-                            translatedDefinition={translatedDef}
-                            secondLanguage={secondLanguage}
+                            vietnameseDefinition={vietnameseDef}
                             pos={pos}
                           />
                         </div>
