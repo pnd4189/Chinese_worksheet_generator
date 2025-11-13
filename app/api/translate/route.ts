@@ -3,6 +3,30 @@ import { NextRequest, NextResponse } from 'next/server';
 // API endpoints
 const GLM_API_URL = 'https://open.bigmodel.cn/api/paas/v4/chat/completions';
 const AZURE_TRANSLATOR_URL = 'https://api.cognitive.microsofttranslator.com/translate?api-version=3.0';
+const MYMEMORY_API_URL = 'https://api.mymemory.translated.net/get';
+
+// MyMemory language code mapping (ISO 639-1)
+const MYMEMORY_LANG_MAP: Record<string, string> = {
+  'vi': 'vi-VN', 'ja': 'ja-JP', 'ko': 'ko-KR', 'th': 'th-TH',
+  'id': 'id-ID', 'ms': 'ms-MY', 'tl': 'fil-PH', 'hi': 'hi-IN',
+  'bn': 'bn-BD', 'ta': 'ta-IN', 'te': 'te-IN', 'ur': 'ur-PK',
+  'fa': 'fa-IR', 'ar': 'ar-SA', 'he': 'he-IL', 'tr': 'tr-TR',
+  'fr': 'fr-FR', 'de': 'de-DE', 'es': 'es-ES', 'it': 'it-IT',
+  'pt': 'pt-PT', 'ru': 'ru-RU', 'pl': 'pl-PL', 'nl': 'nl-NL',
+  'sv': 'sv-SE', 'no': 'nb-NO', 'da': 'da-DK', 'fi': 'fi-FI',
+  'el': 'el-GR', 'cs': 'cs-CZ', 'ro': 'ro-RO', 'hu': 'hu-HU',
+  'bg': 'bg-BG', 'hr': 'hr-HR', 'sr': 'sr-RS', 'sk': 'sk-SK',
+  'sl': 'sl-SI', 'sq': 'sq-AL', 'lt': 'lt-LT', 'lv': 'lv-LV',
+  'et': 'et-EE', 'uk': 'uk-UA', 'be': 'be-BY', 'ka': 'ka-GE',
+  'hy': 'hy-AM', 'az': 'az-AZ', 'kk': 'kk-KZ', 'uz': 'uz-UZ',
+  'mn': 'mn-MN', 'my': 'my-MM', 'km': 'km-KH', 'lo': 'lo-LA',
+  'ne': 'ne-NP', 'si': 'si-LK', 'am': 'am-ET', 'sw': 'sw-KE',
+  'yo': 'yo-NG', 'ig': 'ig-NG', 'ha': 'ha-NG', 'zu': 'zu-ZA',
+  'xh': 'xh-ZA', 'af': 'af-ZA', 'mr': 'mr-IN', 'gu': 'gu-IN',
+  'kn': 'kn-IN', 'ml': 'ml-IN', 'pa': 'pa-IN', 'is': 'is-IS',
+  'ga': 'ga-IE', 'cy': 'cy-GB', 'mt': 'mt-MT', 'eu': 'eu-ES',
+  'ca': 'ca-ES', 'gl': 'gl-ES', 'la': 'la-VA'
+};
 
 // Microsoft Translator language code mapping (ISO 639-1)
 const MS_TRANSLATOR_LANG_MAP: Record<string, string> = {
@@ -157,6 +181,54 @@ ${languageName} translation:`;
 }
 
 /**
+ * Translate using MyMemory API (FREE, NO API KEY NEEDED!)
+ * Rate limits: 1000 translations/day (anonymous), 10000/day with email
+ * This is the SIMPLEST option - works immediately without any setup
+ */
+async function translateWithMyMemory(
+  text: string,
+  targetLanguage: string
+): Promise<TranslationResult> {
+  const targetLang = MYMEMORY_LANG_MAP[targetLanguage] || targetLanguage;
+
+  // Optional: add your email for higher rate limits (10k/day instead of 1k)
+  const email = process.env.MYMEMORY_EMAIL || '';
+  const emailParam = email ? `&de=${encodeURIComponent(email)}` : '';
+
+  const url = `${MYMEMORY_API_URL}?q=${encodeURIComponent(text)}&langpair=en|${targetLang}${emailParam}`;
+
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`MyMemory API error: ${errorText}`);
+  }
+
+  const data = await response.json();
+
+  // Check if we got a valid response
+  if (data.responseStatus !== 200) {
+    throw new Error(`MyMemory API returned status ${data.responseStatus}`);
+  }
+
+  const translation = data.responseData?.translatedText;
+
+  if (!translation) {
+    throw new Error('No translation returned from MyMemory');
+  }
+
+  return {
+    translation,
+    provider: 'mymemory',
+  };
+}
+
+/**
  * Main translation handler with fallback mechanism
  */
 export async function POST(request: NextRequest) {
@@ -172,7 +244,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Get provider priority from env or use default
-    const providersEnv = process.env.TRANSLATION_PROVIDERS || 'microsoft_translator,glm_flash';
+    // MyMemory is default because it needs NO setup - works immediately!
+    const providersEnv = process.env.TRANSLATION_PROVIDERS || 'mymemory,microsoft_translator,glm_flash';
     const providers = providersEnv.split(',').map(p => p.trim());
 
     let lastError: Error | null = null;
@@ -182,7 +255,9 @@ export async function POST(request: NextRequest) {
       try {
         let result: TranslationResult;
 
-        if (provider === 'microsoft_translator') {
+        if (provider === 'mymemory') {
+          result = await translateWithMyMemory(definition, targetLanguage);
+        } else if (provider === 'microsoft_translator') {
           result = await translateWithMicrosoft(definition, targetLanguage);
         } else if (provider === 'glm_flash') {
           result = await translateWithGLM(character, definition, targetLanguage);
