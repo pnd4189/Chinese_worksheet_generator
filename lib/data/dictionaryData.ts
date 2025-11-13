@@ -9,6 +9,144 @@ export interface DictionaryEntry {
 }
 
 export const DICTIONARY: Record<string, DictionaryEntry> = {
+  // Common Single Characters (HSK 1-3)
+  "你": { "pinyin": "nǐ", "definition": "you" },
+  "好": { "pinyin": "hǎo", "definition": "good; well" },
+  "我": { "pinyin": "wǒ", "definition": "I; me" },
+  "是": { "pinyin": "shì", "definition": "to be; yes" },
+  "的": { "pinyin": "de", "definition": "possessive particle" },
+  "了": { "pinyin": "le", "definition": "completed action particle" },
+  "不": { "pinyin": "bù", "definition": "no; not" },
+  "在": { "pinyin": "zài", "definition": "at; in; on" },
+  "人": { "pinyin": "rén", "definition": "person; people" },
+  "有": { "pinyin": "yǒu", "definition": "to have; there is" },
+  "他": { "pinyin": "tā", "definition": "he; him" },
+  "这": { "pinyin": "zhè", "definition": "this" },
+  "中": { "pinyin": "zhōng", "definition": "middle; center; China" },
+  "大": { "pinyin": "dà", "definition": "big; large" },
+  "来": { "pinyin": "lái", "definition": "to come" },
+  "上": { "pinyin": "shàng", "definition": "on; above; up" },
+  "国": { "pinyin": "guó", "definition": "country; nation" },
+  "个": { "pinyin": "gè", "definition": "general measure word" },
+  "到": { "pinyin": "dào", "definition": "to arrive; to reach" },
+  "说": { "pinyin": "shuō", "definition": "to say; to speak" },
+  "们": { "pinyin": "men", "definition": "plural marker" },
+  "为": { "pinyin": "wèi", "definition": "for; because of" },
+  "子": { "pinyin": "zǐ", "definition": "son; child; seed" },
+  "和": { "pinyin": "hé", "definition": "and; with" },
+  "地": { "pinyin": "dì", "definition": "earth; ground" },
+  "出": { "pinyin": "chū", "definition": "to go out; to come out" },
+  "道": { "pinyin": "dào", "definition": "way; road; path" },
+  "也": { "pinyin": "yě", "definition": "also; too" },
+  "时": { "pinyin": "shí", "definition": "time; when" },
+  "年": { "pinyin": "nián", "definition": "year" },
+  "得": { "pinyin": "de", "definition": "to get; complement marker" },
+  "就": { "pinyin": "jiù", "definition": "then; just" },
+  "那": { "pinyin": "nà", "definition": "that" },
+  "要": { "pinyin": "yào", "definition": "to want; to need" },
+  "下": { "pinyin": "xià", "definition": "down; below; under" },
+  "以": { "pinyin": "yǐ", "definition": "by means of; with" },
+  "生": { "pinyin": "shēng", "definition": "to give birth; life" },
+  "会": { "pinyin": "huì", "definition": "can; to meet" },
+  "自": { "pinyin": "zì", "definition": "self; from" },
+  "着": { "pinyin": "zhe", "definition": "continuous aspect particle" },
+  "去": { "pinyin": "qù", "definition": "to go" },
+  "之": { "pinyin": "zhī", "definition": "possessive particle (classical)" },
+  "过": { "pinyin": "guò", "definition": "to pass; to cross; experience particle" },
+  "家": { "pinyin": "jiā", "definition": "home; family" },
+  "学": { "pinyin": "xué", "definition": "to study; to learn" },
+  "对": { "pinyin": "duì", "definition": "correct; to face; towards" },
+  "可": { "pinyin": "kě", "definition": "can; may; but" },
+  "她": { "pinyin": "tā", "definition": "she; her" },
+  "里": { "pinyin": "lǐ", "definition": "inside; within" },
+  "后": { "pinyin": "hòu", "definition": "after; behind; later" },
+  "小": { "pinyin": "xiǎo", "definition": "small; little" },
+  "么": { "pinyin": "me", "definition": "question particle" },
+  "心": { "pinyin": "xīn", "definition": "heart; mind" },
+  "多": { "pinyin": "duō", "definition": "many; much; more" },
+  "天": { "pinyin": "tiān", "definition": "sky; heaven; day" },
+  "而": { "pinyin": "ér", "definition": "and; but; yet" },
+  "能": { "pinyin": "néng", "definition": "can; to be able to" },
+  "都": { "pinyin": "dōu", "definition": "all; both" },
+  "然": { "pinyin": "rán", "definition": "right; so; correct" },
+  "没": { "pinyin": "méi", "definition": "not have; without" },
+  "日": { "pinyin": "rì", "definition": "sun; day" },
+  "于": { "pinyin": "yú", "definition": "in; at; to" },
+  "起": { "pinyin": "qǐ", "definition": "to rise; to get up" },
+  "还": { "pinyin": "hái", "definition": "still; yet; also" },
+  "发": { "pinyin": "fā", "definition": "to send out; to emit" },
+  "成": { "pinyin": "chéng", "definition": "to become; to succeed" },
+  "事": { "pinyin": "shì", "definition": "matter; affair; thing" },
+  "只": { "pinyin": "zhǐ", "definition": "only; just" },
+  "作": { "pinyin": "zuò", "definition": "to do; to make" },
+  "当": { "pinyin": "dāng", "definition": "to be; to serve as; when" },
+  "想": { "pinyin": "xiǎng", "definition": "to think; to want" },
+  "看": { "pinyin": "kàn", "definition": "to see; to look; to watch" },
+  "文": { "pinyin": "wén", "definition": "writing; language; culture" },
+  "无": { "pinyin": "wú", "definition": "without; not have" },
+  "开": { "pinyin": "kāi", "definition": "to open; to start" },
+  "手": { "pinyin": "shǒu", "definition": "hand" },
+  "十": { "pinyin": "shí", "definition": "ten" },
+  "用": { "pinyin": "yòng", "definition": "to use" },
+  "主": { "pinyin": "zhǔ", "definition": "main; master; host" },
+  "行": { "pinyin": "xíng", "definition": "to walk; to go; capable" },
+  "方": { "pinyin": "fāng", "definition": "square; direction; method" },
+  "又": { "pinyin": "yòu", "definition": "again; also" },
+  "如": { "pinyin": "rú", "definition": "like; as; if" },
+  "前": { "pinyin": "qián", "definition": "front; before; ahead" },
+  "所": { "pinyin": "suǒ", "definition": "place; that which" },
+  "本": { "pinyin": "běn", "definition": "root; origin; basis; book" },
+  "见": { "pinyin": "jiàn", "definition": "to see; to meet" },
+  "经": { "pinyin": "jīng", "definition": "to pass through; classic" },
+  "头": { "pinyin": "tóu", "definition": "head" },
+  "面": { "pinyin": "miàn", "definition": "face; surface; side" },
+  "公": { "pinyin": "gōng", "definition": "public; official" },
+  "同": { "pinyin": "tóng", "definition": "same; together; with" },
+  "三": { "pinyin": "sān", "definition": "three" },
+  "已": { "pinyin": "yǐ", "definition": "already" },
+  "老": { "pinyin": "lǎo", "definition": "old; aged" },
+  "从": { "pinyin": "cóng", "definition": "from; to follow" },
+  "动": { "pinyin": "dòng", "definition": "to move; motion" },
+  "两": { "pinyin": "liǎng", "definition": "two; both" },
+  "长": { "pinyin": "cháng", "definition": "long; length" },
+  "把": { "pinyin": "bǎ", "definition": "to hold; object marker" },
+  "第": { "pinyin": "dì", "definition": "ordinal prefix" },
+  "样": { "pinyin": "yàng", "definition": "appearance; shape; kind" },
+  "别": { "pinyin": "bié", "definition": "other; don't; to separate" },
+  "员": { "pinyin": "yuán", "definition": "member; personnel" },
+  "话": { "pinyin": "huà", "definition": "speech; language; words" },
+  "分": { "pinyin": "fēn", "definition": "to divide; minute; point" },
+  "情": { "pinyin": "qíng", "definition": "feeling; emotion; affection" },
+  "世": { "pinyin": "shì", "definition": "world; generation; era" },
+  "界": { "pinyin": "jiè", "definition": "boundary; world; scope" },
+  "月": { "pinyin": "yuè", "definition": "moon; month" },
+  "明": { "pinyin": "míng", "definition": "bright; clear; tomorrow" },
+  "今": { "pinyin": "jīn", "definition": "today; now; modern" },
+  "回": { "pinyin": "huí", "definition": "to return; to reply; classifier" },
+  "水": { "pinyin": "shuǐ", "definition": "water" },
+  "门": { "pinyin": "mén", "definition": "door; gate; way" },
+  "书": { "pinyin": "shū", "definition": "book; letter; writing" },
+  "车": { "pinyin": "chē", "definition": "vehicle; car" },
+  "吃": { "pinyin": "chī", "definition": "to eat" },
+  "喝": { "pinyin": "hē", "definition": "to drink" },
+  "做": { "pinyin": "zuò", "definition": "to do; to make" },
+  "买": { "pinyin": "mǎi", "definition": "to buy" },
+  "东": { "pinyin": "dōng", "definition": "east" },
+  "西": { "pinyin": "xī", "definition": "west" },
+  "南": { "pinyin": "nán", "definition": "south" },
+  "北": { "pinyin": "běi", "definition": "north" },
+  "一": { "pinyin": "yī", "definition": "one" },
+  "二": { "pinyin": "èr", "definition": "two" },
+  "四": { "pinyin": "sì", "definition": "four" },
+  "五": { "pinyin": "wǔ", "definition": "five" },
+  "六": { "pinyin": "liù", "definition": "six" },
+  "七": { "pinyin": "qī", "definition": "seven" },
+  "八": { "pinyin": "bā", "definition": "eight" },
+  "九": { "pinyin": "jiǔ", "definition": "nine" },
+  "百": { "pinyin": "bǎi", "definition": "hundred" },
+  "千": { "pinyin": "qiān", "definition": "thousand" },
+  "万": { "pinyin": "wàn", "definition": "ten thousand" },
+
   "阿拉伯语": {
     "pinyin": "Ā lā bó yǔ",
     "definition": "Arabic (language)"
@@ -309,10 +447,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
     "pinyin": "Aò yùn huì",
     "definition": "abbr. for 奥林匹克运动会; Olympic Games; the Olympics"
   },
-  "八": {
-    "pinyin": "bā",
-    "definition": "eight; 8"
-  },
   "八卦": {
     "pinyin": "bā guà",
     "definition": "the eight divinatory trigrams of the Book of Changes 易经; gossip; gossipy"
@@ -336,10 +470,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
   "拔苗助长": {
     "pinyin": "bá miáo zhù zhǎng",
     "definition": "to spoil things through excessive enthusiasm (idiom)"
-  },
-  "把": {
-    "pinyin": "bǎ",
-    "definition": "to hold; to grasp; to hold a baby in position to help it urinate or defecate; handlebar; classifier: handful, bundle, bunch; classifier for things with handles; (used to put the object before the verb: 把 + {noun} + {verb})"
   },
   "把柄": {
     "pinyin": "bǎ bǐng",
@@ -448,10 +578,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
   "白天": {
     "pinyin": "bái tiān",
     "definition": "daytime; during the day; day"
-  },
-  "百": {
-    "pinyin": "Bǎi",
-    "definition": "surname Bai"
   },
   "百分比": {
     "pinyin": "bǎi fēn bǐ",
@@ -1133,10 +1259,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
     "pinyin": "bēi",
     "definition": "a monument; an upright stone tablet; stele"
   },
-  "北": {
-    "pinyin": "běi",
-    "definition": "north; (classical) to be defeated"
-  },
   "北边": {
     "pinyin": "běi biān",
     "definition": "north; north side; northern part; to the north of"
@@ -1268,10 +1390,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
   "奔跑": {
     "pinyin": "bēn pǎo",
     "definition": "to run"
-  },
-  "本": {
-    "pinyin": "běn",
-    "definition": "root; stem; origin; source; this; the current; original; inherent; originally; classifier for books, periodicals, files etc"
   },
   "本地": {
     "pinyin": "běn dì",
@@ -1941,10 +2059,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
     "pinyin": "biē",
     "definition": "to choke; to stifle; to restrain; to hold back; to hold in (urine); to hold (one's breath)"
   },
-  "别": {
-    "pinyin": "Bié",
-    "definition": "surname Bie"
-  },
   "别的": {
     "pinyin": "bié de",
     "definition": "else; other"
@@ -2276,10 +2390,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
   "捕捉": {
     "pinyin": "bǔ zhuō",
     "definition": "to catch; to seize; to capture"
-  },
-  "不": {
-    "pinyin": "bù",
-    "definition": "no; not so; (bound form) not; un-"
   },
   "不安": {
     "pinyin": "bù ān",
@@ -3745,10 +3855,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
     "pinyin": "chǎo zuò",
     "definition": "to hype; to promote (in the media)"
   },
-  "车": {
-    "pinyin": "Chē",
-    "definition": "surname Che"
-  },
   "车道": {
     "pinyin": "chē dào",
     "definition": "traffic lane; driveway"
@@ -3968,10 +4074,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
   "撑": {
     "pinyin": "chēng",
     "definition": "to support; to prop up; to push or move with a pole; to maintain; to open or unfurl; to fill to bursting point; brace; stay; support"
-  },
-  "成": {
-    "pinyin": "Chéng",
-    "definition": "surname Cheng"
   },
   "成本": {
     "pinyin": "chéng běn",
@@ -4224,10 +4326,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
   "秤": {
     "pinyin": "chēng",
     "definition": "variant of 称, to weigh"
-  },
-  "吃": {
-    "pinyin": "chī",
-    "definition": "to eat; to consume; to eat at (a cafeteria etc); to eradicate; to destroy; to absorb; to suffer (shock, injury, defeat etc)"
   },
   "吃不上": {
     "pinyin": "chī bu shàng",
@@ -4572,10 +4670,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
   "臭": {
     "pinyin": "chòu",
     "definition": "stench; smelly; to smell (bad); repulsive; loathsome; terrible; bad; severely; ruthlessly; dud (ammunition)"
-  },
-  "出": {
-    "pinyin": "chū",
-    "definition": "to go out; to come out; to occur; to produce; to go beyond; to rise; to put forth; to happen; (used after a verb to indicate an outward direction or a positive result); classifier for dramas, plays, operas etc"
   },
   "出版": {
     "pinyin": "chū bǎn",
@@ -5509,10 +5603,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
     "pinyin": "cōng ming",
     "definition": "intelligent; clever; bright; smart; acute (of sight and hearing)"
   },
-  "从": {
-    "pinyin": "cóng",
-    "definition": "variant of 从"
-  },
   "从不": {
     "pinyin": "cóng bù",
     "definition": "never"
@@ -5988,10 +6078,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
   "打针": {
     "pinyin": "dǎ zhēn",
     "definition": "to give or have an injection"
-  },
-  "大": {
-    "pinyin": "dà",
-    "definition": "big; large; great; older (than another person); eldest (as in 姐); greatly; freely; fully; (dialect) father; (dialect) uncle (father's brother)"
   },
   "大巴": {
     "pinyin": "dà bā",
@@ -6613,10 +6699,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
     "pinyin": "dàn gāo",
     "definition": "cake"
   },
-  "当": {
-    "pinyin": "dāng",
-    "definition": "(onom.) dong; ding dong (bell)"
-  },
   "当场": {
     "pinyin": "dāng chǎng",
     "definition": "at the scene; on the spot"
@@ -6793,10 +6875,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
     "pinyin": "dǎo luàn",
     "definition": "to disturb; to look for trouble; to stir up a row; to bother sb intentionally"
   },
-  "到": {
-    "pinyin": "dào",
-    "definition": "to reach; to arrive; to leave for; to go to; to (a place); until (a time); up to (a point); (verb complement indicating arriving at a place or reaching a point); considerate; thoughtful; thorough"
-  },
   "到处": {
     "pinyin": "dào chù",
     "definition": "everywhere"
@@ -6881,10 +6959,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
     "pinyin": "dào qiè",
     "definition": "to steal"
   },
-  "道": {
-    "pinyin": "dào",
-    "definition": "road; path; principle; truth; morality; reason; skill; method; Dao (of Daoism); to say; to speak; to talk; classifier for long thin things (rivers, cracks etc), barriers (walls, doors etc), questions (in an exam etc), commands, courses in a meal, steps in a process; (old) circuit (administrative division)"
-  },
   "道德": {
     "pinyin": "dào dé",
     "definition": "virtue; morality; ethics"
@@ -6920,10 +6994,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
   "德": {
     "pinyin": "Dé",
     "definition": "Germany; German; abbr. for 德国"
-  },
-  "地": {
-    "pinyin": "de",
-    "definition": "-ly; structural particle: used before a verb or adjective, linking it to preceding modifying adverbial adjunct"
   },
   "地板": {
     "pinyin": "dì bǎn",
@@ -7037,10 +7107,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
     "pinyin": "dì zhì",
     "definition": "geology"
   },
-  "的": {
-    "pinyin": "de",
-    "definition": "of; ~'s (possessive particle); (used after an attribute); (used to form a nominal expression); (used at the end of a declarative sentence for emphasis); also pr. [dì] or [di] in poetry and songs"
-  },
   "的话": {
     "pinyin": "de huà",
     "definition": "if (coming after a conditional clause)"
@@ -7048,10 +7114,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
   "的确": {
     "pinyin": "dí què",
     "definition": "really; indeed"
-  },
-  "得": {
-    "pinyin": "dé",
-    "definition": "to obtain; to get; to gain; to catch (a disease); proper; suitable; proud; contented; to allow; to permit; ready; finished"
   },
   "得不偿失": {
     "pinyin": "dé bù cháng shī",
@@ -7360,10 +7422,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
   "递增": {
     "pinyin": "dì zēng",
     "definition": "to increase by degrees; in increasing order; incremental; progressive"
-  },
-  "第": {
-    "pinyin": "dì",
-    "definition": "(prefix indicating ordinal number, as in 六 \"sixth\"); (literary) grades in which successful candidates in the imperial examinations were placed; (old) residence of a high official; (literary) but; however; (literary) only; just"
   },
   "第二": {
     "pinyin": "dì èr",
@@ -7857,10 +7915,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
     "pinyin": "diū shī",
     "definition": "to lose; to misplace"
   },
-  "东": {
-    "pinyin": "Dōng",
-    "definition": "surname Dong"
-  },
   "东北": {
     "pinyin": "Dōng běi",
     "definition": "Northeast China; Manchuria"
@@ -7932,10 +7986,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
   "懂事": {
     "pinyin": "dǒng shì",
     "definition": "to grow beyond the naivete of childhood; to be aware of what is going on in the world; (esp. of a child) sensible; thoughtful; intelligent"
-  },
-  "动": {
-    "pinyin": "dòng",
-    "definition": "(of sth) to move; to set in movement; to displace; to touch; to make use of; to stir (emotions); to alter; abbr. for 动词, verb"
   },
   "动不动": {
     "pinyin": "dòng bu dòng",
@@ -8052,10 +8102,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
   "洞穴": {
     "pinyin": "dòng xué",
     "definition": "cave; cavern"
-  },
-  "都": {
-    "pinyin": "Dū",
-    "definition": "surname Du"
   },
   "都会": {
     "pinyin": "dū huì",
@@ -8353,10 +8399,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
     "pinyin": "duì zhǎng",
     "definition": "captain; team leader"
   },
-  "对": {
-    "pinyin": "duì",
-    "definition": "right; correct; towards; at; for; concerning; regarding; to treat (sb a certain way); to face; (bound form) opposite; facing; matching; to match together; to adjust; to fit; to suit; to answer; to reply; to add; to pour in (a fluid); to check; to compare; classifier: couple; pair"
-  },
   "对白": {
     "pinyin": "duì bái",
     "definition": "dialogue (in a movie or a play)"
@@ -8484,10 +8526,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
   "顿时": {
     "pinyin": "dùn shí",
     "definition": "immediately; suddenly"
-  },
-  "多": {
-    "pinyin": "duō",
-    "definition": "many; much; too many; in excess; (after a numeral) ... odd; how (to what extent) (Taiwan pr. [duó]); (bound form) multi-; poly-"
   },
   "多半": {
     "pinyin": "duō bàn",
@@ -8721,10 +8759,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
     "pinyin": "ér zi",
     "definition": "son"
   },
-  "而": {
-    "pinyin": "ér",
-    "definition": "and; as well as; and so; but (not); yet (not); (indicates causal relation); (indicates change of state); (indicates contrast)"
-  },
   "而且": {
     "pinyin": "ér qiě",
     "definition": "(not only ...) but also; moreover; in addition; furthermore"
@@ -8765,10 +8799,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
     "pinyin": "ěr wén mù dǔ",
     "definition": "to witness personally"
   },
-  "二": {
-    "pinyin": "èr",
-    "definition": "two; 2; (Beijing dialect) stupid"
-  },
   "二手": {
     "pinyin": "èr shǒu",
     "definition": "indirectly acquired; second-hand (information, equipment etc); assistant"
@@ -8784,10 +8814,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
   "二氧化碳": {
     "pinyin": "èr yǎng huà tàn",
     "definition": "carbon dioxide CO2"
-  },
-  "发": {
-    "pinyin": "fā",
-    "definition": "to send out; to show (one's feeling); to issue; to develop; to make a bundle of money; classifier for gunshots (rounds)"
   },
   "发表": {
     "pinyin": "fā biǎo",
@@ -9265,10 +9291,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
     "pinyin": "fàn mài",
     "definition": "to sell; to peddle; to traffic"
   },
-  "方": {
-    "pinyin": "Fāng",
-    "definition": "surname Fang"
-  },
   "方案": {
     "pinyin": "fāng àn",
     "definition": "plan; program (for action etc); proposal; proposed bill"
@@ -9648,10 +9670,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
   "费用": {
     "pinyin": "fèi yòng",
     "definition": "cost; expenditure; expense"
-  },
-  "分": {
-    "pinyin": "fēn",
-    "definition": "to divide; to separate; to distribute; to allocate; to distinguish (good and bad); (bound form) branch of (an organization); sub- (as in 局); fraction; one tenth (of certain units); unit of length equivalent to 0.33 cm; minute (unit of time); minute (angular measurement unit); a point (in sports or games); 0.01 yuan (unit of money)"
   },
   "分辨": {
     "pinyin": "fēn biàn",
@@ -11229,10 +11247,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
     "pinyin": "gé lí",
     "definition": "to separate; to isolate"
   },
-  "个": {
-    "pinyin": "gě",
-    "definition": "used in 自个儿"
-  },
   "个案": {
     "pinyin": "gè àn",
     "definition": "individual case; special case"
@@ -11484,10 +11498,6 @@ export const DICTIONARY: Record<string, DictionaryEntry> = {
   "弓": {
     "pinyin": "Gōng",
     "definition": "surname Gong"
-  },
-  "公": {
-    "pinyin": "gōng",
-    "definition": "public; collectively owned; common; international (e.g. high seas, metric system, calendar); make public; fair; just; Duke, highest of five orders of nobility 位; honorable (gentlemen); father-in-law; male (animal)"
   },
   "公安": {
     "pinyin": "gōng ān",
