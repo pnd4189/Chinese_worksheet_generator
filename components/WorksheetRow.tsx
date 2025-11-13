@@ -7,6 +7,7 @@ interface WorksheetRowProps {
   gridSize: number;
   strokeColor: string;
   pinyin?: string;
+  rowNumber?: number;
 }
 
 /**
@@ -16,19 +17,22 @@ interface WorksheetRowProps {
  * - Cells 2-3: Faded character (tracing guide)
  * - Cells 4-10: Empty cells for practice
  */
-export function WorksheetRow({ char, gridStyle, gridSize, strokeColor, pinyin }: WorksheetRowProps) {
+export function WorksheetRow({ char, gridStyle, gridSize, strokeColor, pinyin, rowNumber }: WorksheetRowProps) {
   return (
-    <div className="mb-4">
-      {/* Character info header */}
-      <div className="flex items-center gap-3 mb-2">
-        <div className="chinese-font text-3xl font-bold">{char}</div>
+    <div>
+      {/* Row header - compact inline layout */}
+      <div className="flex items-center gap-2 mb-1.5">
+        {rowNumber && (
+          <span className="text-xs font-semibold text-purple-600 w-6">{rowNumber}.</span>
+        )}
+        <div className="chinese-font text-2xl font-bold">{char}</div>
         {pinyin && (
-          <div className="text-sm text-muted-foreground">{pinyin}</div>
+          <div className="text-xs text-muted-foreground">{pinyin}</div>
         )}
       </div>
 
-      {/* Practice grid: 10 cells */}
-      <div className="flex gap-1.5 flex-wrap">
+      {/* Practice grid: 10 cells in one row - no wrapping */}
+      <div className="flex gap-1.5">
         {Array.from({ length: 10 }).map((_, idx) => {
           let isTraceable = false;
           let traceOpacity = 1;

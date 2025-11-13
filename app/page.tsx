@@ -19,7 +19,7 @@ export default function Home() {
   const [characters, setCharacters] = useState("你好世界")
   const [gridStyle, setGridStyle] = useState("cross")
   const [strokeColor, setStrokeColor] = useState("black")
-  const [gridSize, setGridSize] = useState([20])
+  const [gridSize, setGridSize] = useState([18])
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false)
 
   const handleDownloadPDF = async () => {
@@ -34,8 +34,10 @@ export default function Home() {
     }
   }
 
-  // Parse characters and get up to 10 for one page
-  const charArray = characters.split(/[\s,]+/).filter(c => c.trim()).slice(0, 10);
+  // Parse characters: split words by space/comma, then split each word into individual characters
+  // Example: "爱情 你好" → ["爱", "情", "你", "好"] - each character gets its own row
+  const words = characters.split(/[\s,]+/).filter(w => w.trim());
+  const charArray = words.flatMap(word => word.split('')).slice(0, 10);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
@@ -137,13 +139,16 @@ export default function Home() {
                   </Label>
                   <Slider
                     id="grid-size"
-                    min={15}
-                    max={35}
+                    min={12}
+                    max={25}
                     step={1}
                     value={gridSize}
                     onValueChange={setGridSize}
                     className="py-2"
                   />
+                  <p className="text-xs text-muted-foreground">
+                    Optimized for A4 printing (18-20px recommended)
+                  </p>
                 </div>
               </CardContent>
             </Card>
@@ -189,43 +194,36 @@ export default function Home() {
         </aside>
 
         {/* Main Preview Area */}
-        <main className="flex-1 p-8 overflow-auto">
-          <div className="max-w-5xl mx-auto">
-            <Card id="worksheet-preview" className="bg-white shadow-2xl border-2 border-purple-100">
+        <main className="flex-1 p-8 overflow-auto bg-gray-100">
+          {/* A4 Page Container - 794px width (210mm) */}
+          <div className="mx-auto" style={{ width: '794px', minHeight: '1123px' }}>
+            <Card id="worksheet-preview" className="bg-white shadow-2xl border-2 border-purple-100" style={{ width: '794px', minHeight: '1123px' }}>
               {/* Worksheet Header */}
-              <div className="text-center py-8 border-b-2 border-purple-100 bg-gradient-to-r from-purple-50 to-blue-50">
-                <h2 className="text-3xl font-bold text-gray-900">{title}</h2>
-                <p className="text-sm text-muted-foreground mt-2">Chinese Character Practice Sheet</p>
-                <div className="flex items-center justify-center gap-4 mt-3 text-xs text-muted-foreground">
+              <div className="text-center py-6 border-b-2 border-purple-100 bg-gradient-to-r from-purple-50 to-blue-50">
+                <h2 className="text-2xl font-bold text-gray-900">{title}</h2>
+                <p className="text-xs text-muted-foreground mt-1">Chinese Character Practice Sheet</p>
+                <div className="flex items-center justify-center gap-3 mt-2 text-xs text-muted-foreground">
                   <span>Date: {new Date().toLocaleDateString()}</span>
                   <span>•</span>
                   <span>{charArray.length} characters</span>
                 </div>
               </div>
 
-              {/* Preview Content */}
-              <div className="p-8">
+              {/* Preview Content - A4 printable area */}
+              <div className="px-12 py-6">
                 {charArray.length > 0 ? (
-                  <div className="space-y-6">
+                  <div className="space-y-4">
                     {charArray.map((char, idx) => {
                       const dictEntry = lookupCharacter(char);
                       return (
-                        <div key={idx} className="pb-6 border-b border-purple-50 last:border-0">
-                          <div className="mb-3 flex items-baseline gap-3">
-                            <span className="text-sm font-semibold text-purple-600">#{idx + 1}</span>
-                            <span className="text-sm text-muted-foreground">
-                              {dictEntry?.pinyin || ''}
-                            </span>
-                            <span className="text-xs text-muted-foreground">
-                              {dictEntry?.definition ? `(${dictEntry.definition.split(';')[0]})` : ''}
-                            </span>
-                          </div>
+                        <div key={idx} className="pb-3 border-b border-gray-100 last:border-0">
                           <WorksheetRow
                             char={char}
                             gridStyle={gridStyle as any}
                             gridSize={gridSize[0]}
                             strokeColor={strokeColor}
                             pinyin={dictEntry?.pinyin}
+                            rowNumber={idx + 1}
                           />
                         </div>
                       );
