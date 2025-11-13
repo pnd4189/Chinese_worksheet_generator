@@ -15,6 +15,7 @@ import { WorksheetRow } from "@/components/WorksheetRow"
 import { generatePDF } from "@/lib/utils/pdfGenerator"
 import { distributeCharactersTo10Rows, getCharacterRepeatCounts } from "@/lib/utils/characterDistribution"
 import { translateDefinition, LANGUAGE_OPTIONS, type SupportedLanguage } from "@/lib/utils/translation"
+import { inferPOSFromDefinition } from "@/lib/utils/posInference"
 
 export default function Home() {
   const [title, setTitle] = useState("Chinese Practice Worksheet")
@@ -247,6 +248,7 @@ export default function Home() {
                       const dictEntry = lookupCharacter(char);
                       const englishDef = dictEntry?.definition || '';
                       const translatedDef = translateDefinition(char, englishDef, secondLanguage);
+                      const pos = inferPOSFromDefinition(englishDef);
 
                       return (
                         <div key={idx} className="pb-3 border-b border-gray-100 last:border-0">
@@ -260,6 +262,7 @@ export default function Home() {
                             englishDefinition={englishDef}
                             translatedDefinition={translatedDef}
                             secondLanguage={secondLanguage}
+                            pos={pos}
                           />
                         </div>
                       );

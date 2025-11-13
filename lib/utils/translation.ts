@@ -139,12 +139,120 @@ const VIETNAMESE_TRANSLATIONS: Record<string, string> = {
   "妹": "em (gái)",
 };
 
-export type SupportedLanguage = 'en' | 'vi' | 'zh';
+export type SupportedLanguage = 'en' | 'vi' | 'zh' | 'ja' | 'ko' | 'th' | 'id' | 'ms' | 'tl' | 'hi' | 'bn' | 'ta' | 'te' | 'ur' | 'fa' | 'ar' | 'he' | 'tr' | 'kk' | 'uz' | 'mn' | 'my' | 'km' | 'lo' | 'ne' | 'si' | 'fr' | 'de' | 'es' | 'it' | 'pt' | 'ru' | 'pl' | 'nl' | 'sv' | 'no' | 'da' | 'fi' | 'el' | 'cs' | 'ro' | 'hu' | 'bg' | 'hr' | 'sr' | 'sk' | 'sl' | 'sq' | 'lt' | 'lv' | 'et' | 'uk' | 'be' | 'ka' | 'hy' | 'az' | 'kn' | 'ml' | 'mr' | 'gu' | 'pa' | 'or' | 'as' | 'sd' | 'ps' | 'ku' | 'yi' | 'am' | 'ti' | 'om' | 'so' | 'sw' | 'rw' | 'zu' | 'xh' | 'st' | 'tn' | 'sn' | 'ny' | 'mg' | 'yo' | 'ig' | 'ha' | 'ff' | 'wo' | 'ln' | 'kg' | 'lu' | 'mt' | 'is' | 'fo' | 'ga' | 'gd' | 'cy' | 'br' | 'eu' | 'ca' | 'gl' | 'ast' | 'oc' | 'rm' | 'la' | 'eo';
 
 export const LANGUAGE_OPTIONS = [
+  // Default & Asian Languages
   { value: 'en', label: 'English', flag: '🇬🇧' },
   { value: 'vi', label: 'Tiếng Việt', flag: '🇻🇳' },
   { value: 'zh', label: '中文', flag: '🇨🇳' },
+  { value: 'ja', label: '日本語', flag: '🇯🇵' },
+  { value: 'ko', label: '한국어', flag: '🇰🇷' },
+  { value: 'th', label: 'ไทย', flag: '🇹🇭' },
+  { value: 'id', label: 'Bahasa Indonesia', flag: '🇮🇩' },
+  { value: 'ms', label: 'Bahasa Melayu', flag: '🇲🇾' },
+  { value: 'tl', label: 'Filipino', flag: '🇵🇭' },
+  { value: 'my', label: 'မြန်မာ', flag: '🇲🇲' },
+  { value: 'km', label: 'ភាសាខ្មែរ', flag: '🇰🇭' },
+  { value: 'lo', label: 'ລາວ', flag: '🇱🇦' },
+  { value: 'mn', label: 'Монгол', flag: '🇲🇳' },
+
+  // South Asian Languages
+  { value: 'hi', label: 'हिन्दी', flag: '🇮🇳' },
+  { value: 'bn', label: 'বাংলা', flag: '🇧🇩' },
+  { value: 'ta', label: 'தமிழ்', flag: '🇮🇳' },
+  { value: 'te', label: 'తెలుగు', flag: '🇮🇳' },
+  { value: 'mr', label: 'मराठी', flag: '🇮🇳' },
+  { value: 'gu', label: 'ગુજરાતી', flag: '🇮🇳' },
+  { value: 'kn', label: 'ಕನ್ನಡ', flag: '🇮🇳' },
+  { value: 'ml', label: 'മലയാളം', flag: '🇮🇳' },
+  { value: 'pa', label: 'ਪੰਜਾਬੀ', flag: '🇮🇳' },
+  { value: 'ur', label: 'اردو', flag: '🇵🇰' },
+  { value: 'ne', label: 'नेपाली', flag: '🇳🇵' },
+  { value: 'si', label: 'සිංහල', flag: '🇱🇰' },
+
+  // Middle Eastern Languages
+  { value: 'ar', label: 'العربية', flag: '🇸🇦' },
+  { value: 'fa', label: 'فارسی', flag: '🇮🇷' },
+  { value: 'he', label: 'עברית', flag: '🇮🇱' },
+  { value: 'tr', label: 'Türkçe', flag: '🇹🇷' },
+  { value: 'ku', label: 'Kurdî', flag: '🏴' },
+  { value: 'ps', label: 'پښتو', flag: '🇦🇫' },
+
+  // European Languages - Western
+  { value: 'fr', label: 'Français', flag: '🇫🇷' },
+  { value: 'de', label: 'Deutsch', flag: '🇩🇪' },
+  { value: 'es', label: 'Español', flag: '🇪🇸' },
+  { value: 'it', label: 'Italiano', flag: '🇮🇹' },
+  { value: 'pt', label: 'Português', flag: '🇵🇹' },
+  { value: 'nl', label: 'Nederlands', flag: '🇳🇱' },
+  { value: 'ca', label: 'Català', flag: '🇪🇸' },
+  { value: 'gl', label: 'Galego', flag: '🇪🇸' },
+  { value: 'eu', label: 'Euskara', flag: '🇪🇸' },
+
+  // European Languages - Northern
+  { value: 'sv', label: 'Svenska', flag: '🇸🇪' },
+  { value: 'no', label: 'Norsk', flag: '🇳🇴' },
+  { value: 'da', label: 'Dansk', flag: '🇩🇰' },
+  { value: 'fi', label: 'Suomi', flag: '🇫🇮' },
+  { value: 'is', label: 'Íslenska', flag: '🇮🇸' },
+
+  // European Languages - Eastern
+  { value: 'ru', label: 'Русский', flag: '🇷🇺' },
+  { value: 'pl', label: 'Polski', flag: '🇵🇱' },
+  { value: 'cs', label: 'Čeština', flag: '🇨🇿' },
+  { value: 'sk', label: 'Slovenčina', flag: '🇸🇰' },
+  { value: 'uk', label: 'Українська', flag: '🇺🇦' },
+  { value: 'be', label: 'Беларуская', flag: '🇧🇾' },
+  { value: 'bg', label: 'Български', flag: '🇧🇬' },
+  { value: 'ro', label: 'Română', flag: '🇷🇴' },
+  { value: 'hu', label: 'Magyar', flag: '🇭🇺' },
+
+  // European Languages - Southern
+  { value: 'el', label: 'Ελληνικά', flag: '🇬🇷' },
+  { value: 'hr', label: 'Hrvatski', flag: '🇭🇷' },
+  { value: 'sr', label: 'Српски', flag: '🇷🇸' },
+  { value: 'sl', label: 'Slovenščina', flag: '🇸🇮' },
+  { value: 'sq', label: 'Shqip', flag: '🇦🇱' },
+  { value: 'mk', label: 'Македонски', flag: '🇲🇰' },
+
+  // Baltic & Other European
+  { value: 'lt', label: 'Lietuvių', flag: '🇱🇹' },
+  { value: 'lv', label: 'Latviešu', flag: '🇱🇻' },
+  { value: 'et', label: 'Eesti', flag: '🇪🇪' },
+  { value: 'mt', label: 'Malti', flag: '🇲🇹' },
+  { value: 'ga', label: 'Gaeilge', flag: '🇮🇪' },
+  { value: 'gd', label: 'Gàidhlig', flag: '🏴󐁧󐁢󐁳󐁣󐁴󐁿' },
+  { value: 'cy', label: 'Cymraeg', flag: '🏴󐁧󐁢󐁷󐁬󐁳󐁿' },
+
+  // Caucasus & Central Asia
+  { value: 'ka', label: 'ქართული', flag: '🇬🇪' },
+  { value: 'hy', label: 'Հայերեն', flag: '🇦🇲' },
+  { value: 'az', label: 'Azərbaycan', flag: '🇦🇿' },
+  { value: 'kk', label: 'Қазақ', flag: '🇰🇿' },
+  { value: 'uz', label: 'Oʻzbek', flag: '🇺🇿' },
+  { value: 'ky', label: 'Кыргызча', flag: '🇰🇬' },
+  { value: 'tg', label: 'Тоҷикӣ', flag: '🇹🇯' },
+  { value: 'tk', label: 'Türkmen', flag: '🇹🇲' },
+
+  // African Languages
+  { value: 'sw', label: 'Kiswahili', flag: '🇰🇪' },
+  { value: 'am', label: 'አማርኛ', flag: '🇪🇹' },
+  { value: 'ti', label: 'ትግርኛ', flag: '🇪🇷' },
+  { value: 'so', label: 'Soomaali', flag: '🇸🇴' },
+  { value: 'om', label: 'Afaan Oromoo', flag: '🇪🇹' },
+  { value: 'ha', label: 'Hausa', flag: '🇳🇬' },
+  { value: 'yo', label: 'Yorùbá', flag: '🇳🇬' },
+  { value: 'ig', label: 'Igbo', flag: '🇳🇬' },
+  { value: 'zu', label: 'isiZulu', flag: '🇿🇦' },
+  { value: 'xh', label: 'isiXhosa', flag: '🇿🇦' },
+  { value: 'af', label: 'Afrikaans', flag: '🇿🇦' },
+  { value: 'rw', label: 'Kinyarwanda', flag: '🇷🇼' },
+  { value: 'mg', label: 'Malagasy', flag: '🇲🇬' },
+
+  // Other
+  { value: 'eo', label: 'Esperanto', flag: '🌍' },
+  { value: 'la', label: 'Latin', flag: '🏛️' },
 ] as const;
 
 /**
