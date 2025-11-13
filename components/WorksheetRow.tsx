@@ -8,6 +8,9 @@ interface WorksheetRowProps {
   strokeColor: string;
   pinyin?: string;
   rowNumber?: number;
+  englishDefinition?: string;
+  translatedDefinition?: string;
+  secondLanguage?: string;
 }
 
 /**
@@ -17,17 +20,45 @@ interface WorksheetRowProps {
  * - Cells 2-3: Faded character (tracing guide)
  * - Cells 4-10: Empty cells for practice
  */
-export function WorksheetRow({ char, gridStyle, gridSize, strokeColor, pinyin, rowNumber }: WorksheetRowProps) {
+export function WorksheetRow({
+  char,
+  gridStyle,
+  gridSize,
+  strokeColor,
+  pinyin,
+  rowNumber,
+  englishDefinition,
+  translatedDefinition,
+  secondLanguage
+}: WorksheetRowProps) {
+  // Format definitions for display
+  const formatDefinition = (def: string) => {
+    if (!def) return '';
+    // Truncate long definitions and take first meaning
+    const firstMeaning = def.split(';')[0].split(',')[0];
+    return firstMeaning.length > 30 ? firstMeaning.substring(0, 30) + '...' : firstMeaning;
+  };
+
   return (
     <div>
-      {/* Row header - compact inline layout */}
-      <div className="flex items-center gap-2 mb-1.5">
+      {/* Row header - compact inline layout with bilingual definitions */}
+      <div className="flex items-center gap-2 mb-1.5 flex-wrap">
         {rowNumber && (
           <span className="text-xs font-semibold text-purple-600 w-6">{rowNumber}.</span>
         )}
         <div className="chinese-font text-2xl font-bold">{char}</div>
         {pinyin && (
-          <div className="text-xs text-muted-foreground">{pinyin}</div>
+          <div className="text-xs text-muted-foreground italic">{pinyin}</div>
+        )}
+        {englishDefinition && (
+          <div className="text-xs text-gray-600">
+            🇬🇧 {formatDefinition(englishDefinition)}
+          </div>
+        )}
+        {translatedDefinition && secondLanguage !== 'en' && translatedDefinition !== englishDefinition && (
+          <div className="text-xs text-gray-600">
+            {secondLanguage === 'vi' ? '🇻🇳' : secondLanguage === 'zh' ? '🇨🇳' : ''} {formatDefinition(translatedDefinition)}
+          </div>
         )}
       </div>
 

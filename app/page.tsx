@@ -8,11 +8,13 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Download, Sparkles, BookOpen, Settings2 } from "lucide-react"
+import { Download, Sparkles, BookOpen, Settings2, Languages } from "lucide-react"
 import { getHSKCharacters } from "@/lib/data/hskLists"
 import { lookupCharacter } from "@/lib/data/dictionaryData"
 import { WorksheetRow } from "@/components/WorksheetRow"
 import { generatePDF } from "@/lib/utils/pdfGenerator"
+import { distributeCharactersTo10Rows, getCharacterRepeatCounts } from "@/lib/utils/characterDistribution"
+import { translateDefinition, LANGUAGE_OPTIONS, type SupportedLanguage } from "@/lib/utils/translation"
 
 export default function Home() {
   const [title, setTitle] = useState("Chinese Practice Worksheet")
@@ -20,6 +22,7 @@ export default function Home() {
   const [gridStyle, setGridStyle] = useState("cross")
   const [strokeColor, setStrokeColor] = useState("black")
   const [gridSize, setGridSize] = useState([18])
+  const [secondLanguage, setSecondLanguage] = useState<SupportedLanguage>("vi")
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false)
 
   const handleDownloadPDF = async () => {
@@ -37,7 +40,11 @@ export default function Home() {
   // Parse characters: split words by space/comma, then split each word into individual characters
   // Example: "爱情 你好" → ["爱", "情", "你", "好"] - each character gets its own row
   const words = characters.split(/[\s,]+/).filter(w => w.trim());
-  const charArray = words.flatMap(word => word.split('')).slice(0, 10);
+  const uniqueChars = words.flatMap(word => word.split(''));
+
+  // Auto-distribute to exactly 10 rows (repeating characters if needed)
+  const charArray = distributeCharactersTo10Rows(uniqueChars);
+  const repeatCounts = getCharacterRepeatCounts(uniqueChars);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
@@ -95,7 +102,7 @@ export default function Home() {
                   />
                   <p className="text-xs text-muted-foreground flex items-center gap-1">
                     <BookOpen className="h-3 w-3" />
-                    Up to 10 characters per worksheet
+                    Auto-fills to 10 rows (repeats characters if needed)
                   </p>
                 </div>
 
@@ -148,6 +155,29 @@ export default function Home() {
                   />
                   <p className="text-xs text-muted-foreground">
                     Optimized for A4 printing (18-20px recommended)
+                  </p>
+                </div>
+
+                {/* Second Language */}
+                <div className="space-y-2">
+                  <Label htmlFor="second-language" className="text-sm font-medium flex items-center gap-2">
+                    <Languages className="h-4 w-4" />
+                    Second Language
+                  </Label>
+                  <Select value={secondLanguage} onValueChange={(val) => setSecondLanguage(val as SupportedLanguage)}>
+                    <SelectTrigger id="second-language" className="border-purple-200">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {LANGUAGE_OPTIONS.map(lang => (
+                        <SelectItem key={lang.value} value={lang.value}>
+                          {lang.flag} {lang.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <p className="text-xs text-muted-foreground">
+                    Definitions shown in English + selected language
                   </p>
                 </div>
               </CardContent>
@@ -205,7 +235,7 @@ export default function Home() {
                 <div className="flex items-center justify-center gap-3 mt-2 text-xs text-muted-foreground">
                   <span>Date: {new Date().toLocaleDateString()}</span>
                   <span>•</span>
-                  <span>{charArray.length} characters</span>
+                  <span>{uniqueChars.length} unique characters • {charArray.length} rows</span>
                 </div>
               </div>
 
@@ -215,6 +245,9 @@ export default function Home() {
                   <div className="space-y-4">
                     {charArray.map((char, idx) => {
                       const dictEntry = lookupCharacter(char);
+                      const englishDef = dictEntry?.definition || '';
+                      const translatedDef = translateDefinition(char, englishDef, secondLanguage);
+
                       return (
                         <div key={idx} className="pb-3 border-b border-gray-100 last:border-0">
                           <WorksheetRow
@@ -224,6 +257,9 @@ export default function Home() {
                             strokeColor={strokeColor}
                             pinyin={dictEntry?.pinyin}
                             rowNumber={idx + 1}
+                            englishDefinition={englishDef}
+                            translatedDefinition={translatedDef}
+                            secondLanguage={secondLanguage}
                           />
                         </div>
                       );
