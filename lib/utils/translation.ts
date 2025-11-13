@@ -139,12 +139,11 @@ const VIETNAMESE_TRANSLATIONS: Record<string, string> = {
   "妹": "em (gái)",
 };
 
-export type SupportedLanguage = 'en' | 'vi' | 'zh' | 'ja' | 'ko' | 'th' | 'id' | 'ms' | 'tl' | 'hi' | 'bn' | 'ta' | 'te' | 'ur' | 'fa' | 'ar' | 'he' | 'tr' | 'kk' | 'uz' | 'mn' | 'my' | 'km' | 'lo' | 'ne' | 'si' | 'fr' | 'de' | 'es' | 'it' | 'pt' | 'ru' | 'pl' | 'nl' | 'sv' | 'no' | 'da' | 'fi' | 'el' | 'cs' | 'ro' | 'hu' | 'bg' | 'hr' | 'sr' | 'sk' | 'sl' | 'sq' | 'lt' | 'lv' | 'et' | 'uk' | 'be' | 'ka' | 'hy' | 'az' | 'kn' | 'ml' | 'mr' | 'gu' | 'pa' | 'or' | 'as' | 'sd' | 'ps' | 'ku' | 'yi' | 'am' | 'ti' | 'om' | 'so' | 'sw' | 'rw' | 'zu' | 'xh' | 'st' | 'tn' | 'sn' | 'ny' | 'mg' | 'yo' | 'ig' | 'ha' | 'ff' | 'wo' | 'ln' | 'kg' | 'lu' | 'mt' | 'is' | 'fo' | 'ga' | 'gd' | 'cy' | 'br' | 'eu' | 'ca' | 'gl' | 'ast' | 'oc' | 'rm' | 'la' | 'eo';
+export type SupportedLanguage = 'en' | 'vi' | 'ja' | 'ko' | 'th' | 'id' | 'ms' | 'tl' | 'hi' | 'bn' | 'ta' | 'te' | 'ur' | 'fa' | 'ar' | 'he' | 'tr' | 'kk' | 'uz' | 'mn' | 'my' | 'km' | 'lo' | 'ne' | 'si' | 'fr' | 'de' | 'es' | 'it' | 'pt' | 'ru' | 'pl' | 'nl' | 'sv' | 'no' | 'da' | 'fi' | 'el' | 'cs' | 'ro' | 'hu' | 'bg' | 'hr' | 'sr' | 'sk' | 'sl' | 'sq' | 'lt' | 'lv' | 'et' | 'uk' | 'be' | 'ka' | 'hy' | 'az' | 'kn' | 'ml' | 'mr' | 'gu' | 'pa' | 'or' | 'as' | 'sd' | 'ps' | 'ku' | 'yi' | 'am' | 'ti' | 'om' | 'so' | 'sw' | 'rw' | 'zu' | 'xh' | 'st' | 'tn' | 'sn' | 'ny' | 'mg' | 'yo' | 'ig' | 'ha' | 'ff' | 'wo' | 'ln' | 'kg' | 'lu' | 'mt' | 'is' | 'fo' | 'ga' | 'gd' | 'cy' | 'br' | 'eu' | 'ca' | 'gl' | 'ast' | 'oc' | 'rm' | 'la' | 'eo';
 
 export const LANGUAGE_OPTIONS = [
-  // Asian Languages (English removed - it's always shown by default)
+  // Asian Languages (English and Chinese removed - English always shown by default, Chinese is the source language)
   { value: 'vi', label: 'Tiếng Việt', flag: '🇻🇳' },
-  { value: 'zh', label: '中文', flag: '🇨🇳' },
   { value: 'ja', label: '日本語', flag: '🇯🇵' },
   { value: 'ko', label: '한국어', flag: '🇰🇷' },
   { value: 'th', label: 'ไทย', flag: '🇹🇭' },
@@ -270,11 +269,6 @@ export function translateDefinition(
 ): string {
   if (targetLang === 'en') {
     return englishDefinition;
-  }
-
-  if (targetLang === 'zh') {
-    // For Chinese, we could show traditional form or etymology
-    return char; // For now, just return the character
   }
 
   if (targetLang === 'vi') {

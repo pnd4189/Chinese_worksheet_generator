@@ -72,9 +72,12 @@ export function WorksheetRow({
             🇬🇧 {formatDefinition(englishDefinition)}
           </div>
         )}
-        {translatedDefinition && secondLanguage && secondLanguage !== 'en' && translatedDefinition !== englishDefinition && (
+        {translatedDefinition && secondLanguage && secondLanguage !== 'en' && (
           <div className="text-xs text-gray-600">
             {getLanguageFlag(secondLanguage)} {formatDefinition(translatedDefinition)}
+            {translatedDefinition === englishDefinition && (
+              <span className="ml-1 text-amber-600 text-[10px]">(translation pending)</span>
+            )}
           </div>
         )}
       </div>
