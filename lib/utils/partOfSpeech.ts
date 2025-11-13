@@ -79,20 +79,28 @@ export function formatPOS(pos: string | string[] | undefined): string {
 
 /**
  * Gets short POS label (first letter uppercase)
- * @param pos - Single POS code or array of codes
+ * @param pos - Single POS code, array of codes, or comma-separated string
  * @returns Short label like "N", "V", "Adj"
  */
 export function getShortPOS(pos: string | string[] | undefined): string {
   if (!pos) return '';
 
-  const codes = Array.isArray(pos) ? pos : [pos];
+  // Handle comma-separated string from HSK dictionary
+  let codes: string[];
+  if (Array.isArray(pos)) {
+    codes = pos;
+  } else {
+    codes = pos.split(',').map(c => c.trim());
+  }
   const firstCode = codes[0];
 
   const shortMap: Record<string, string> = {
     'n': 'N',
     'nz': 'PN',
+    'nr': 'PN',
     'v': 'V',
     'vd': 'Aux',
+    'vn': 'V-N',
     'a': 'Adj',
     'ad': 'Adv',
     'd': 'Adv',
@@ -106,6 +114,9 @@ export function getShortPOS(pos: string | string[] | undefined): string {
     'y': 'Part',
     't': 'Time',
     's': 'Loc',
+    'f': 'Dir',
+    'b': 'Dist',
+    'g': 'Morph',
     'i': 'Idiom',
   };
 

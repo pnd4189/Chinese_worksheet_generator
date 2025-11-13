@@ -10,6 +10,7 @@ import { Slider } from "@/components/ui/slider"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Download, Sparkles, BookOpen, Settings2 } from "lucide-react"
 import { getHSKCharacters } from "@/lib/data/hskLists"
+import { lookupHSKWord } from "@/lib/data/hskDictionary"
 import { lookupCharacter } from "@/lib/data/dictionaryData"
 import { WorksheetRow } from "@/components/WorksheetRow"
 import { generatePDF } from "@/lib/utils/pdfGenerator"
@@ -221,9 +222,13 @@ export default function Home() {
                 {charArray.length > 0 ? (
                   <div className="space-y-4">
                     {charArray.map((char, idx) => {
-                      const dictEntry = lookupCharacter(char);
-                      const englishDef = dictEntry?.definition || '';
-                      const pos = inferPOSFromDefinition(englishDef);
+                      // Try HSK dictionary first (for words/phrases), fallback to character dictionary
+                      const hskEntry = lookupHSKWord(char);
+                      const charEntry = lookupCharacter(char);
+
+                      const pinyin = hskEntry?.pinyin || charEntry?.pinyin || '';
+                      const englishDef = hskEntry?.definition || charEntry?.definition || '';
+                      const pos = hskEntry?.pos || inferPOSFromDefinition(englishDef);
 
                       return (
                         <div key={idx} className="pb-3 border-b border-gray-100 last:border-0">
@@ -232,7 +237,7 @@ export default function Home() {
                             gridStyle={gridStyle as any}
                             gridSize={gridSize[0]}
                             strokeColor={strokeColor}
-                            pinyin={dictEntry?.pinyin}
+                            pinyin={pinyin}
                             rowNumber={idx + 1}
                             englishDefinition={englishDef}
                             pos={pos}
