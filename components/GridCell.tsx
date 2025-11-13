@@ -6,12 +6,13 @@ interface GridCellProps {
   gridSize: number;
   strokeColor: string;
   isTraceable: boolean;
+  traceOpacity?: number;
 }
 
 /**
  * GridCell component renders a single practice grid cell with various guide patterns
  */
-export function GridCell({ char, gridStyle, gridSize, strokeColor, isTraceable }: GridCellProps) {
+export function GridCell({ char, gridStyle, gridSize, strokeColor, isTraceable, traceOpacity = 0.3 }: GridCellProps) {
   const cellSize = gridSize * 3;
   const halfSize = cellSize / 2;
 
@@ -109,7 +110,7 @@ export function GridCell({ char, gridStyle, gridSize, strokeColor, isTraceable }
             style={{
               fontSize: gridSize * 2,
               color: getColorValue(strokeColor),
-              opacity: 0.3
+              opacity: traceOpacity
             }}
           >
             {char}
