@@ -66,6 +66,14 @@ npm start
 npm run lint
 ```
 
+## Usage
+
+1. **Enter characters** -- Type Chinese characters separated by spaces or commas
+2. **Select HSK level** -- Pick random characters from HSK 1-6 word lists
+3. **Customize** -- Adjust grid style, size, and stroke color
+4. **Preview** -- See the worksheet with pinyin and definitions
+5. **Export** -- Download as PDF
+
 ## Translation Setup (Optional)
 
 Translation works out of the box using the free MyMemory API (no key required, 1000 translations/day anonymous, 10 000/day with email).
